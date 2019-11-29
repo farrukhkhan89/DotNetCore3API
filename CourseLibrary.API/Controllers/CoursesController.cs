@@ -28,11 +28,26 @@ namespace CourseLibrary.API.Controllers
         {
             if(!_courseLibraryRepository.AuthorExists(authorId))
             {
-                return NotFound();
+                return NotFound("Author Not exists");
             }
 
             var coursesForAuthorFromRepo = _courseLibraryRepository.GetCourses(authorId);
             return Ok(_mapper.Map<IEnumerable<CourseDto>>(coursesForAuthorFromRepo));
+        }
+
+        [HttpGet("{courseId}")]
+        public ActionResult<IEnumerable<CourseDto>> GetCourseForAuthor(Guid authorId,Guid courseId)
+        {
+            if (!_courseLibraryRepository.AuthorExists(authorId))
+            {
+                return NotFound("Author Not exists");
+            }
+
+            var courseForAuthorFromRepo = _courseLibraryRepository.GetCourse(authorId,courseId);
+            if(courseForAuthorFromRepo!=null)
+            return Ok(_mapper.Map<CourseDto>(courseForAuthorFromRepo));
+
+            return NotFound();
         }
     }
 }
