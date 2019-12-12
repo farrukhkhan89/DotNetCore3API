@@ -46,6 +46,14 @@
               "target": "Package",
               "version": "[7.0.0, )"
             },
+            "MediatR": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "MediatR.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[3.0.1, )"
@@ -59,6 +67,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[3.0.1, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.9.3, )"
             }
           },
           "imports": [

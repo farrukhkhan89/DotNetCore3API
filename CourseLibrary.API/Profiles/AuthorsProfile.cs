@@ -13,15 +13,11 @@ namespace CourseLibrary.API.Profiles
         {
             CreateMap<Entities.Author, Models.AuthorDto>()
                 .ForMember(
-                    dest => dest.Name,
-                    opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"))
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src=>src.Id))
                 .ForMember(
                     dest => dest.Age,
                     opt => opt.MapFrom(src => src.DateOfBirth.GetCurrentAge()));
-                
-
-
-
         }
     }
 }

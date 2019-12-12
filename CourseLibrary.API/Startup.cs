@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MediatR.Pipeline;
+using MediatR;
 
 namespace CourseLibrary.API
 {
@@ -33,15 +35,29 @@ namespace CourseLibrary.API
                     setupAction.ReturnHttpNotAcceptable = true;
                 }).AddXmlDataContractSerializerFormatters();
 
+           
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddScoped<ICourseLibraryRepository, CourseLibraryRepository>();
-            services.AddDbContext<CourseLibraryContext>(options =>
-            {
-                options.UseSqlServer(
-                    @"Server=.;Database=CourseLibraryDB;Trusted_Connection=True;");
-            });
-
             
+           // services.AddScoped<ICourseLibraryRepository, CourseLibraryRepository>();
+            services.AddSingleton<IBooksRepository, BooksRepository>();
+            services.AddSingleton<IArtistsRepository, ArtistsRepository>();
+
+            //services.AddDbContext<CourseLibraryContext>(options =>
+            //{
+            //    options.UseSqlServer(
+            //        Configuration.GetConnectionString("CourseLibraryDB"));
+            //});
+
+            //services.AddDbContext<CourseLibraryContext>(options =>
+            //{
+            //    options.UseSqlServer(
+            //        Configuration.GetConnectionString("CourseLibraryDB"));
+            //});
+
+            //services.AddDbContext<AppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddMediatR(typeof(Startup));
+        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
