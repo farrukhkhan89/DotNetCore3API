@@ -10,7 +10,7 @@ namespace CourseLibrary.API.Entities
     {
         [BsonId]
         //[BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        public double Id { get; set; }
+        public double _Id { get; set; }
 
         [BsonElement("artistname")]
         public string ArtistName { get; set; }
@@ -25,10 +25,10 @@ namespace CourseLibrary.API.Entities
     public class Album
     {
         [BsonElement("album")]
-        public string AlbumName { get; set; }
+        public string album { get; set; }
 
         [BsonElement("year")]
-        public int Albumyear { get; set; }
+        public int Year { get; set; }
 
         [BsonElement("genre")]
         public string Genre { get; set; }

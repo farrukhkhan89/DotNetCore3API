@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using CourseLibrary.API.Commands;
+using CourseLibrary.API.Entities;
 using CourseLibrary.API.Queries;
 using CourseLibrary.API.Services;
 using MediatR;
@@ -44,6 +46,34 @@ namespace CourseLibrary.API.Controllers
 
             return Ok(result);
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Artist artist)
+        {
+            try
+            {
+                await _mediator.Send(new CreateArtistCommand { Artist = artist });
+                return CreatedAtRoute("GetArtistById", new { Id = artist._Id }, artist);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("{Id}")]
+        public async Task<IActionResult> Update(double id, Artist artist)
+        {
+            try
+            {
+                await _mediator.Send(new UpdateArtistCommand { Id = id, Artist = artist });
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 

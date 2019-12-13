@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CourseLibrary.API.Commands;
 using CourseLibrary.API.Entities;
 using CourseLibrary.API.Models;
 using CourseLibrary.API.Queries;
@@ -54,5 +55,49 @@ namespace CourseLibrary.API.Handlers
                 return artistDTOList;
             }
         }
+
+
+        public class CreateArtistCommandHandler : IRequestHandler<CreateArtistCommand, double>
+        {
+            private readonly IMapper _mapper;
+            private readonly IArtistsRepository _artistRepository;
+
+            public CreateArtistCommandHandler(IArtistsRepository artistRepository, IMapper mapper)
+            {
+                _artistRepository = artistRepository;
+                _mapper = mapper;
+            }
+
+            public async Task<double> Handle(CreateArtistCommand request, CancellationToken cancellationToken)
+            {
+                var existingRepo = await _artistRepository.GetArtistByIdAsync(request.Artist._Id);
+                if (existingRepo != null)
+                    throw new Exception("Repository alreay exists. Creation failed.");
+
+                //request.Repository.LastUpdated = DateTime.Now;
+                await _artistRepository.Create(request.Artist);
+                return request.Artist._Id;
+            }
+        }
+
+        public class UpdateArtistCommandHandler : IRequestHandler<UpdateArtistCommand>
+        {
+            //private readonly IMapper _mapper;
+            private readonly IArtistsRepository _artistRepository;
+
+            public UpdateArtistCommandHandler(IArtistsRepository artistRepository)
+            {
+                _artistRepository = artistRepository;
+            }
+
+            public async Task<Unit> Handle(UpdateArtistCommand request, CancellationToken cancellationToken)
+            {
+                await _artistRepository.Update(request.Id,request.Artist);
+                return Unit.Value;
+            }
+
+           
+        }
+
     }
 }

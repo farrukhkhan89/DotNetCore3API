@@ -14,6 +14,7 @@ namespace CourseLibrary.API.Profiles
         {
             //CreateMap<Artist, ArtistDto>().ForMember(x => x.Albums, opt => opt.Ignore());
             CreateMap<Artist, ArtistDto>();
+               
 
             //.ForMember(
             //  dest => dest.AddressObj,
@@ -31,10 +32,10 @@ namespace CourseLibrary.API.Profiles
             CreateMap<Entities.Album, Models.AlbumDto>()
                .ForMember(
                    dest => dest.AlbumName,
-                   opt => opt.MapFrom(src => src.AlbumName))
+                   opt => opt.MapFrom(src => src.album))
                .ForMember(
                    dest => dest.Albumyear,
-                   opt => opt.MapFrom(src => src.Albumyear))
+                   opt => opt.MapFrom(src => src.Year))
                 .ForMember(
                    dest => dest.Genre,
                    opt => opt.MapFrom(src => src.Genre));

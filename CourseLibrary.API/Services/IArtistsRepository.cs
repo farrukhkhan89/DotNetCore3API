@@ -10,5 +10,7 @@ namespace CourseLibrary.API.Services
     {
         public Task<List<Artist>> GetArtistsAsync();
         public Task<Artist> GetArtistByIdAsync(double id);
+        Task Create(Artist artist);
+        Task Update(double id, Artist artist);
     }
 }

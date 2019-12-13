@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CourseLibrary.API.Services
 {
-    public class ArtistsRepository: IArtistsRepository
+    public class ArtistsRepository : IArtistsRepository
     {
         private readonly IMongoCollection<Artist> _artist;
 
@@ -31,8 +31,19 @@ namespace CourseLibrary.API.Services
 
         public async Task<Artist> GetArtistByIdAsync(double id)
         {
-            var artists = await _artist.FindAsync(x => x.Id==id);
+            var artists = await _artist.FindAsync(x => x._Id == id);
             return await artists.FirstOrDefaultAsync();
+        }
+
+        public async Task Create(Artist artist)
+        {
+            //repository.LastUpdated = DateTime.Now;
+            await _artist.InsertOneAsync(artist);
+        }
+
+        public async Task Update(double id, Artist artist)
+        {
+            await _artist.ReplaceOneAsync(repo => repo._Id == id, artist);
         }
     }
 }
